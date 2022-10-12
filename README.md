@@ -2,6 +2,7 @@
 This is the official implementation of paper:
 
 #### CAGroup3D: Class-Aware Grouping for 3D Object Detection on Point Clouds
+[PaperLink](https://arxiv.org/abs/2210.04264)
 
 ## NEWS
 - 🔥 CAGroup3D is accepted at NeurIPS 2022.
