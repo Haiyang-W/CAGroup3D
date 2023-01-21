@@ -11,3 +11,4 @@ This is the official implementation of paper:
 - 🔥 CAGroup3D is accepted at NeurIPS 2022.
 - Official implementation based on [OpenPCDet](https://github.com/open-mmlab/OpenPCDet) will be released soon (may be November). 
 - I'm sorry for the delay of code release. Due to busyness of PhD qualifying exam and some problems in reproduction of CAGroup3D based on OpenPCDet, code will be released in December. 
+- The code will be released in the next week (before Feb).
