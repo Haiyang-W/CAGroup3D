@@ -1,0 +1,70 @@
+DATASET: 'SunrgbdDataset'
+DATA_PATH: '../data/sunrgbd'
+PROCESSED_DATA_TAG: 'sunrgbd_processed_data_v0_5_0'
+
+POINT_CLOUD_RANGE: [-40, -40, -10, 40, 40, 10]
+
+DATA_SPLIT: {
+    'train': train,
+    'test': val
+}
+
+REPEAT: {
+  'train': 4,
+  'test': 1
+}
+
+INFO_PATH: {
+  'train': [sunrgbd_infos_train.pkl],
+  'test': [sunrgbd_infos_val.pkl],
+}
+
+GET_ITEM_LIST: ["points"]
+
+FILTER_EMPTY_BOXES_FOR_TRAIN: True
+
+DATA_AUGMENTOR_TRAIN:
+    DISABLE_AUG_LIST: ['placeholder']
+    AUG_CONFIG_LIST:
+        - NAME: indoor_point_sample
+          num_points: 100000 # change to 100000
+
+        - NAME: random_world_flip
+          ALONG_AXIS_LIST: ['y']
+
+        - NAME: random_world_rotation_mmdet3d
+          WORLD_ROT_ANGLE: [-0.523599, 0.523599]
+
+        - NAME: random_world_scaling
+          WORLD_SCALE_RANGE: [0.85, 1.15]
+        
+        - NAME: random_world_translation
+          ALONG_AXIS_LIST: ['x', 'y', 'z']
+          NOISE_TRANSLATE_STD: 0.1
+
+DATA_AUGMENTOR_TEST:
+  DISABLE_AUG_LIST: ['placeholder']
+  AUG_CONFIG_LIST:
+    - NAME: indoor_point_sample
+      num_points: 100000
+
+# No Use
+DATA_AUGMENTOR:
+  DISABLE_AUG_LIST: ['placeholder']
+  AUG_CONFIG_LIST:
+    - NAME: indoor_point_sample
+      num_points: 50000  # 50000
+
+POINT_FEATURE_ENCODING: {
+    encoding_type: absolute_coordinates_encoding,
+    used_feature_list: ['x', 'y', 'z', 'r', 'g', 'b'],
+    src_feature_list: ['x', 'y', 'z', 'r', 'g', 'b'],
+}
+
+
+DATA_PROCESSOR:
+    - NAME: mask_points_and_boxes_outside_range
+      REMOVE_OUTSIDE_BOXES: False
+
+
+

@@ -1,0 +1,135 @@
+CLASS_NAMES: ['bed', 'table', 'sofa', 'chair', 'toilet', 'desk', 'dresser',
+               'night_stand', 'bookshelf', 'bathtub']
+
+DATA_CONFIG: 
+    _BASE_CONFIG_: cfgs/dataset_configs/sunrgbd_dataset.yaml
+
+
+MODEL:
+    NAME: RBGNet
+
+    BACKBONE_3D:
+        NAME: PointNet2_FBS_SSG
+        SA_CONFIG:
+            NPOINTS: [2048, 1024, 512, 256]
+            RADIUS: [0.2, 0.4, 0.8, 1.2]
+            NSAMPLE: [64, 32, 16, 16]
+            MLPS: [[64, 64, 128],
+                    [128, 128, 256],
+                    [128, 128, 256],
+                    [128, 128, 256]]
+            FBS_MLPS: [[-1, -1], [128, 256, 256], [256, 256, 256], [256, 256, 256]]
+            TOPK: [1024, 896, 448, 224]
+            FG_NSAMPLE: [-1, 896, 448, 224]
+        FP_MLPS: [[256, 256], [256, 256]]
+
+    POINT_HEAD:
+        NAME: RBGHead
+        CLASS_AGNOSTIC: False
+        NUM_CLASSES: 10
+        VOTE_MODULE_CFG:
+            IN_CHANNELS: 256
+            VOTE_PER_SEED: 1
+            GT_PER_SEED: 3
+            CONV_CHANNELS: [256, 256]
+            CONV_CFG: Conv1d
+            NORM_CFG: BN1d
+            NORM_FEATS: True
+            VOTE_LOSS:
+                NAME: ChamferDistance
+                MODE: l1
+                LOSS_DST_WEIGHT: 10.0
+        VOTE_AGGREGATION_CFG:
+            NAME: PointnetSAModule
+            NUM_POINTS: 256
+            RADIUS: 0.3
+            NUM_SAMPLE: 16
+            MLP_CHANNELS: [256, 128, 128, 128]
+            USE_XYZ: True
+        PRED_LAYER_CFG:
+            IN_CHANNELS: 128
+            SHARED_CONV_CHANNELS: [128, 128]
+            BIAS: TRUE
+        CONV_CFG: Conv1d
+        NORM_CFG: BN1d
+        FPS_NUM_SAMPLE: 2048
+        THRESHOLD: 0.2
+        SAMPLE_NUM_THRESHOLD: 1
+        SAMPLE_BIN_NUM: 5
+        FINE_THRESHOLD: 0.1
+        FINE_SAMPLE_NUM_THRESHOLD: 1
+        FINE_SAMPLE_BIN_NUM: 3
+        SCALE_RATIO: 0.5
+        POSITIVE_WEIGHT: 0
+        BOX_CODER:
+            NAME: RBGBBoxCoder
+            NUM_SIZE: 10
+            NUM_DIR_BINS: 12
+            WITH_ROT: True
+        RAY_NUM: 66
+        RAY_BASED_GROUP:
+            RAY_NUM: 66
+            SEED_FEAT_DIM: 256
+            FPS_NUM_SAMPLE: 2048
+            SAMPLE_NUM_THRESHOLD: 1
+            SAMPLE_BIN_NUM: 5
+            SCALE_RATIO: 0.5
+            SA_RADIUS: 0.2
+            SA_NUM_SAMPLE: 8
+            NUM_SEED_POINTS: 1024
+            FINE_SAMPLE_BIN_NUM: 3
+            FINE_SA_RADIUS: 0.1
+            FINE_SA_NUM_SAMPLE: 4
+            FINE_SAMPLE_NUM_THRESHOLD: 1
+
+        LOSS_CONFIG:
+            LOSS_WEIGHTS: {
+                'scale_loss_weight': 1.11,
+                'sample_loss_weight': 3.0,
+                'obj_loss_weight': 5.0,
+                'dir_class_loss_weight': 1.0,
+                'dir_res_loss_weight': 1.11,
+                'size_loss_weight': 1.11,
+                'cls_loss_weight': 1.0,
+                'iou_loss_weight': 3.33,
+                'intersection_loss_weight': 5.0,
+            }
+
+        TRAIN:
+            POS_DISTANCE_THR: 0.3
+            NEG_DISTANCE_THR: 0.3
+            SAMPLE_MODE: vote
+            USE_NMS: False
+            RPN_PROPOSAL:
+                USE_NMS: False
+        TEST:
+            SAMPLE_MODE: seed
+            NMS_THR: 0.30
+            SCORE_THR: 0.00
+            PER_CLASS_PROPOSAL: True
+
+
+    POST_PROCESSING:
+        RECALL_THRESH_LIST: [0.25, 0.5]
+        EVAL_METRIC: scannet
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 8
+    NUM_EPOCHS: 64 
+
+    OPTIMIZER: adamW 
+    LR: 0.006
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [48, 60] 
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10

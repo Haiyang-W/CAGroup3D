@@ -1,0 +1,101 @@
+CLASS_NAMES: ['bed', 'table', 'sofa', 'chair', 'toilet', 'desk', 'dresser',
+               'night_stand', 'bookshelf', 'bathtub']
+
+DATA_CONFIG: 
+    _BASE_CONFIG_: cfgs/dataset_configs/sunrgbd_dataset.yaml
+
+VOXEL_SIZE: &VOXEL_SIZE 0.02
+N_CLASSES: &N_CLASSES 10
+SEMANTIC_THR: &SEMANTIC_THR 0.15
+
+MODEL:
+    NAME: CAGroup3D
+    VOXEL_SIZE: *VOXEL_SIZE
+    SEMANTIC_MIN_THR: 0.05
+    SEMANTIC_ITER_VALUE: 0.02
+    SEMANTIC_THR: *SEMANTIC_THR
+    BACKBONE_3D:
+        NAME: BiResNet
+        IN_CHANNELS: 3
+        OUT_CHANNELS: 64
+
+    DENSE_HEAD:
+        NAME: CAGroup3DHead
+        IN_CHANNELS: [64, 128, 256, 512]
+        OUT_CHANNELS: 64
+        SEMANTIC_THR: *SEMANTIC_THR
+        VOXEL_SIZE: *VOXEL_SIZE
+        N_CLASSES: *N_CLASSES
+        N_REG_OUTS: 8
+        CLS_KERNEL: 9
+        WITH_YAW: True
+        USE_SEM_SCORE: False
+        EXPAND_RATIO: 3
+        ASSIGNER:
+            NAME: CAGroup3DAssigner
+            LIMIT: 27
+            TOPK: 18
+            N_SCALES: 4
+        LOSS_OFFSET:
+            NAME: SmoothL1Loss
+            BETA: 0.04
+            REDUCTION: sum
+            LOSS_WEIGHT: 0.2
+        LOSS_BBOX:
+            NAME: IoU3DLoss
+            WITH_YAW: True
+            LOSS_WEIGHT: 1.0
+        NMS_CONFIG:
+            SCORE_THR: 0.01
+            NMS_PRE: 1000
+            IOU_THR: 0.5
+    
+    ROI_HEAD:
+        NAME: CAGroup3DRoIHead
+        NUM_CLASSES: *N_CLASSES
+        MIDDLE_FEATURE_SOURCE: [3]
+        GRID_SIZE: 7
+        VOXEL_SIZE: *VOXEL_SIZE
+        COORD_KEY: 2
+        MLPS: [[64,128,128]]
+        CODE_SIZE: 7
+        ENCODE_SINCOS: True
+        ROI_PER_IMAGE: 128
+        ROI_FG_RATIO: 0.9
+        REG_FG_THRESH: 0.3
+        ROI_CONV_KERNEL: 5
+        ENLARGE_RATIO: False
+        USE_IOU_LOSS: True
+        USE_GRID_OFFSET: False
+        USE_SIMPLE_POOLING: True
+        USE_CENTER_POOLING: True
+        LOSS_WEIGHTS:
+            RCNN_CLS_WEIGHT: 1.0 # no use
+            RCNN_REG_WEIGHT: 0.5
+            RCNN_IOU_WEIGHT: 1.0
+            CODE_WEIGHT: [1., 1., 1., 1., 1., 1., 1., 1.]
+
+    POST_PROCESSING:
+        RECALL_THRESH_LIST: [0.25, 0.5]
+        EVAL_METRIC: scannet
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 8 # 4x4 or 8x2
+    NUM_EPOCHS: 14
+
+    OPTIMIZER: adamW 
+    LR: 0.001
+    WEIGHT_DECAY: 0.0001 
+    DECAY_STEP_LIST: [8, 11] 
+    LR_DECAY: 0.1
+    GRAD_NORM_CLIP: 10
+
+    # no use
+    PCT_START: 0.4 
+    DIV_FACTOR: 10 
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    
