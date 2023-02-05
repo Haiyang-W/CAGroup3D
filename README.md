@@ -57,7 +57,7 @@ pip install \
 
 ## Data preparation
 We haven't achieved compatibility with the generated data of OpenPCDet yet and use the same data format as [MMdeteciton3d](https://github.com/open-mmlab/mmdetection3d) for now. We will try to implement indoor data pre-processing based on OpenPCDet as soon as possible.
-- follow  [MMdetection3D](https://github.com/open-mmlab/mmdetection3d) to create data (ScanNetV2, SunRGBD),  we also provide processed data in [here](https://github.com/open-mmlab/mmdetection3d).
+- follow  [MMdetection3D](https://github.com/open-mmlab/mmdetection3d) to create data (ScanNetV2, SunRGBD),  we also provide processed data in [here](https://drive.google.com/drive/folders/1sKvq4WBSEb4CWMdCTN6lCHLXnn3NwUv_).
 
 
 - remember to modify the `DATA_PATH` in **tools/cfgs/dataset_configs/scannet_dataset.yaml**, **sunrgbd_dataset.yaml** or link the generated data as follows:
