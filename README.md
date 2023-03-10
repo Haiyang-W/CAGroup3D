@@ -40,7 +40,7 @@ cd CAGroup3D/pcdet/ops/rotated_iou/cuda_op
 python setup.py install
 # knn ops
 cd ../../knn
-python setup.py install
+python setup.py develop
 ```
 
 - Install [MinkowskiEngine](https://github.com/NVIDIA/MinkowskiEngine)
