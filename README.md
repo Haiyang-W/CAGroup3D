@@ -31,6 +31,7 @@ git clone https://github.com/Haiyang-W/CAGroup3D.git
 pip install spconv-cu113
 cd CAGroup3D/
 python setup.py develop
+# if you meet some pakage not matched errors, just pip install them individually before install pcdet
 ```
 
 - Compile additional CUDA ops
@@ -53,6 +54,10 @@ pip install \
   --install-option="--force_cuda" \
   -v \
   --no-deps
+# Or if you can not install MinkowskiEngine with pip sucessfully,
+git clone https://github.com/NVIDIA/MinkowskiEngine.git
+cd MinkowskiEngine
+python setup.py install --blas=openblas --force_cuda
 ```
 
 ## Data preparation
