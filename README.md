@@ -62,7 +62,7 @@ python setup.py install --blas=openblas --force_cuda
 
 ## Data preparation
 We haven't achieved compatibility with the generated data of OpenPCDet yet and use the same data format as [MMdeteciton3d](https://github.com/open-mmlab/mmdetection3d) for now. We will try to implement indoor data pre-processing based on OpenPCDet as soon as possible.
-- follow  [MMdetection3D(0.15)](https://github.com/open-mmlab/mmdetection3d) to create data (ScanNetV2, SunRGBD). Note that the coordinate system adopted in MMdetection3D(0.15) is very different from MMdetection3D(>=1.0). We also provide processed data in [here](https://drive.google.com/drive/folders/1sKvq4WBSEb4CWMdCTN6lCHLXnn3NwUv_)(highly recommended).
+- follow  [MMdetection3D(0.15)](https://github.com/open-mmlab/mmdetection3d) to create data (ScanNetV2, SunRGBD). Note that the coordinate system adopted in MMdetection3D(0.15) is very different from MMdetection3D(>=1.0). We also provide processed data in [GoogleDrive](https://drive.google.com/drive/folders/1sKvq4WBSEb4CWMdCTN6lCHLXnn3NwUv_) (highly recommended). For people from mainland China, we also provide [BaiduDrive](https://pan.baidu.com/s/1SO1YhvC9BZh5eFXYjt-a3g?pwd=8mfk).
 
 
 - remember to modify the `DATA_PATH` in **tools/cfgs/dataset_configs/scannet_dataset.yaml**, **sunrgbd_dataset.yaml** or link the generated data as follows:
