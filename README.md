@@ -102,9 +102,9 @@ CUDA_VISIBLE_DEVICES={} ./scripts/dist_test.sh {num_gpus} --cfg_file cfgs/sunrgb
 ```
 
 ### Main Results
-All models are trained with 4 3090 GPUs. Please note that the pcdet version of scannet pretrained model has a higher mAP@50 (61.1 vs 60.3), but a lower mAP@25 (74.0 vs 74.5) than the original paper. Additionally, the sunrgbd pretrained model has a higher mAP@25 (67.1 vs 66.4) than the original paper. Since these two datasets fluctuate significantly, training more times should yield better results than the pre-trained models we provide.
+We reproduce CAGroup3D based on [OpenPCDet](https://github.com/open-mmlab/OpenPCDet)(Paper reported is MMDet3D version). All models are trained with 4 3090 GPUs. The batch size of each card is 4 (2x8 is better). Please note that the pcdet version of scannet pretrained model has a higher mAP@50 (61.1 vs 60.3), but a lower mAP@25 (74.0 vs 74.5) than the original paper. Additionally, the sunrgbd pretrained model has a higher mAP@25 (67.1 vs 66.4) than the original paper. Since these two datasets fluctuate significantly, training more times should yield better results than the pre-trained models we provide.
 
-|   Dataset | mAP@0.25 | mAP0.50 | mAP@0.25(PCDet repro) | mAP0.50(PCDet repro) | Pretrain Model && Log |
+|   Dataset | mAP@0.25 | mAP0.50 | mAP@0.25(repro) | mAP0.50(repro) | Pretrain Model && Log |
 |----------|----------:|:-------:|:-------:|:-------:|:-------:|
 | [ScanNet](tools/cfgs/scannet_models/CAGroup3D.yaml) | 74.5  |	60.3 | 74.0 | 61.1 | [model](https://drive.google.com/drive/folders/1lhd3kx-G-6vMVj51Ryjp20cibwOD1txq), [log](https://drive.google.com/drive/folders/1lhd3kx-G-6vMVj51Ryjp20cibwOD1txq) |
 | [Sun RGB-D](tools/cfgs/sunrgbd_models/CAGroup3D.yaml) | 66.4   |	49.5 | 67.1| 49.1| [model](https://drive.google.com/drive/folders/1mSmAxzHxEvXLd3IpxBsycdx9aigl7Wb3), [log](https://drive.google.com/drive/folders/1mSmAxzHxEvXLd3IpxBsycdx9aigl7Wb3) |
