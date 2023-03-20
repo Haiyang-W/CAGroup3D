@@ -102,12 +102,12 @@ CUDA_VISIBLE_DEVICES={} ./scripts/dist_test.sh {num_gpus} --cfg_file cfgs/sunrgb
 ```
 
 ### Main Results
-All models are trained with 4 3090 GPUs and the pretrained models will be released soon.
+All models are trained with 4 3090 GPUs.
 
-|   Dataset | mAP@0.25 | mAP0.50 | Pretrain Model (will soon) |
+|   Dataset | mAP@0.25 | mAP0.50 | Pretrain Model && Log |
 |----------|----------:|:-------:|:-------:|
-| [ScanNet](tools/cfgs/scannet_models/CAGroup3D.yaml) | 75.1(74.5)  |	61.3(60.3) | [model](https://github.com/Haiyang-W/CAGroup3D) |
-| [Sun RGB-D](tools/cfgs/sunrgbd_models/CAGroup3D.yaml) | 66.8(66.4)   |	50.2(49.5) | [model](https://github.com/Haiyang-W/CAGroup3D) |
+| [ScanNet](tools/cfgs/scannet_models/CAGroup3D.yaml) | 75.1(74.5)  |	61.3(60.3) | [model](https://drive.google.com/drive/folders/1lhd3kx-G-6vMVj51Ryjp20cibwOD1txq), [log](https://drive.google.com/drive/folders/1lhd3kx-G-6vMVj51Ryjp20cibwOD1txq) |
+| [Sun RGB-D](tools/cfgs/sunrgbd_models/CAGroup3D.yaml) | 66.8(66.4)   |	50.2(49.5) | [model](https://drive.google.com/drive/folders/1mSmAxzHxEvXLd3IpxBsycdx9aigl7Wb3), [log](https://drive.google.com/drive/folders/1mSmAxzHxEvXLd3IpxBsycdx9aigl7Wb3) |
 
 ## Citation
 Please consider citing our work as follows if it is helpful.
