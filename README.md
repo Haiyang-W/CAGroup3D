@@ -102,7 +102,7 @@ CUDA_VISIBLE_DEVICES={} ./scripts/dist_test.sh {num_gpus} --cfg_file cfgs/sunrgb
 ```
 
 ### Main Results
-All models are trained with 4 3090 GPUs.
+All models are trained with 4 3090 GPUs. Please note that the pcdet version of scannet pretrained model has a higher mAP@50 (61.1 vs 60.3), but a lower mAP@25 (74.0 vs 74.5) than the original paper. Additionally, the sunrgbd pretrained model has a higher mAP@25 (67.1 vs 66.4) than the original paper. Since these two datasets fluctuate significantly, training more times should yield better results than the pre-trained models we provide.
 
 |   Dataset | mAP@0.25 | mAP0.50 | Pretrain Model && Log |
 |----------|----------:|:-------:|:-------:|
