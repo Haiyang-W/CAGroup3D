@@ -82,7 +82,10 @@ CUDA_VISIBLE_DEVICES={} ./scripts/dist_train.sh {num_gpus} --cfg_file cfgs/scann
 - Testing
 ```bash
 cd tools/
+# test single pth
 python test.py --cfg_file cfgs/scannet_models/CAGroup3D.yaml --ckpt {your pth}
+# or test all checkpoints
+python test.py --cfg_file cfgs/scannet_models/CAGroup3D.yaml --extra_tag {your name} --eval_all
 # dist test is also supported
 CUDA_VISIBLE_DEVICES={} ./scripts/dist_test.sh {num_gpus} --cfg_file cfgs/scannet_models/CAGroup3D.yaml --ckpt {your pth}
 ```
@@ -96,7 +99,10 @@ CUDA_VISIBLE_DEVICES={} ./scripts/dist_train.sh {num_gpus} --cfg_file cfgs/sunrg
 - Testing
 ```bash
 cd tools/
+# test single pth
 python test.py --cfg_file cfgs/sunrgbd_models/CAGroup3D.yaml --ckpt {your pth}
+# or test all checkpoints
+python test.py --cfg_file cfgs/sunrgbd_models/CAGroup3D.yaml --extra_tag {your name} --eval_all
 # dist test is also supported
 CUDA_VISIBLE_DEVICES={} ./scripts/dist_test.sh {num_gpus} --cfg_file cfgs/sunrgbd_models/CAGroup3D.yaml --ckpt {your pth}
 ```
