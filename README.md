@@ -13,6 +13,11 @@ This repo is the official implementation of the paper:
 - Official implementation based on [OpenPCDet](https://github.com/open-mmlab/OpenPCDet) is released.
 - 🔥 CAGroup3D is accepted at NeurIPS 2022.
 
+## TODO
+
+- [x] Implement CAGroup3D on OpenPCDet
+- [ ] Fix the bug of slow inference (180ms->400ms) in our OpenPCDet version. Paper report is mmdet3d version.
+
 ## Introduction
 This paper presents a novel two-stage fully sparse convolutional 3D object detection framework, named CAGroup3D. The proposed method first generates some high-quality 3D proposals by leveraging the class-aware local group strategy on the object surface voxels with the same semantic predictions, which considers semantic consistency and diverse locality abandoned in previous bottom-up approaches. Then, to recover the features of missed voxels due to incorrect voxel-wise segmentation, we build a fully sparse convolutional RoI pooling module to directly aggregate fine-grained spatial information from backbone for further proposal refinement.
 ## Requirements
@@ -128,12 +133,6 @@ year={2022},
 url={https://openreview.net/forum?id=nLKkHwYP4Au}
 }
 ```
-
-## TODO
-
-- [x] Implement CAGroup3D on OpenPCDet
-- [ ] clean up and release the code of MMdetection3D version CAGroup3D
-- [ ] add score refinement in the RoI-Conv Module
 
 ## Acknowledgments
 This project is based on the following codebases.
